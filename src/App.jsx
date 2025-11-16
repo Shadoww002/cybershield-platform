@@ -324,44 +324,92 @@ const CyberThreatPlatform = () => {
   };
 
   const sendMessage = async () => {
-    if (!inputMessage.trim()) return;
+  if (!inputMessage.trim()) return;
 
-    const userMessage = { role: 'user', content: inputMessage };
-    setMessages(prev => [...prev, userMessage]);
-    setInputMessage('');
-    setIsTyping(true);
+  const userMessage = { role: 'user', content: inputMessage };
+  setMessages(prev => [...prev, userMessage]);
+  setInputMessage('');
+  setIsTyping(true);
 
-    setTimeout(() => {
-      let response = '';
-      const query = inputMessage.toLowerCase();
+  try {
+    // Build context about the analysis for the AI
+    let systemContext = 'You are a cybersecurity expert assistant helping users understand their security analysis. Be concise, helpful, and technical when appropriate.';
+    
+    if (analysisResult) {
+      systemContext += `\n\nCurrent Security Analysis Context:
+- Overall Threat Level: ${analysisResult.overallThreatLevel}
+- Total Threats: ${analysisResult.threatsDetected}
+- Critical Issues: ${analysisResult.criticalIssues}
+- Warnings: ${analysisResult.warnings}
+- Confidence: ${analysisResult.confidence}%
 
-      if (analysisResult) {
-        if (query.includes('threat') || query.includes('risk')) {
-          response = `Based on the current analysis, your system has an **${analysisResult.overallThreatLevel} Risk** level with ${analysisResult.threatsDetected} threats detected. The most critical issues include:\n\n${analysisResult.predictions.slice(0, 2).map(p => `• **${p.type}** (${p.probability}% probability) - ${p.severity} severity\n  Impact: ${p.impact}`).join('\n\n')}\n\nI recommend addressing the critical issues immediately.`;
-        } else if (query.includes('critical') || query.includes('urgent')) {
-          const critical = analysisResult.predictions.filter(p => p.severity === 'Critical');
-          response = `You have **${analysisResult.criticalIssues} critical issues** that need immediate attention:\n\n${critical.map((p, i) => `${i + 1}. **${p.type}**\n   - Location: ${p.location}\n   - Impact: ${p.impact}\n   - Recommendation: ${p.recommendation}`).join('\n\n')}`;
-        } else if (query.includes('recommendation') || query.includes('fix') || query.includes('solve')) {
-          response = `Here are the top security recommendations for your system:\n\n${analysisResult.recommendations.slice(0, 3).map((r, i) => `${i + 1}. ${r}`).join('\n\n')}\n\nWould you like me to explain any of these in more detail?`;
-        } else if (query.includes('vulnerability') || query.includes('cve')) {
-          response = `I've detected **${analysisResult.vulnerabilities.length} vulnerabilities** in your system:\n\n${analysisResult.vulnerabilities.map(v => `• **${v.cve}** in ${v.component}\n  - Severity: ${v.severity}\n  - CVSS Score: ${v.cvssScore}`).join('\n\n')}\n\nThese should be patched as soon as possible to prevent exploitation.`;
-        } else if (query.includes('timeline') || query.includes('forecast') || query.includes('future')) {
-          response = `According to the risk forecast:\n\n• **Next 24 hours**: ${analysisResult.timelineRisk.next24h}% risk\n• **Next 7 days**: ${analysisResult.timelineRisk.next7days}% risk\n• **Next 30 days**: ${analysisResult.timelineRisk.next30days}% risk\n\nThe risk is trending ${analysisResult.timelineRisk.next30days > analysisResult.timelineRisk.next24h ? 'upward' : 'stable'}, indicating you should take preventive action now.`;
-        } else {
-          response = `I can help you with:\n\n• **Threat Analysis** - Explain detected threats and their severity\n• **Recommendations** - Guide you through security improvements\n• **CVE Vulnerabilities** - Detail known security flaws\n• **Risk Timeline** - Discuss future risk predictions\n• **Attack Timeline** - Review the sequence of detected events\n\nWhat would you like to know more about?`;
-        }
+Top Threats:
+${analysisResult.predictions.slice(0, 3).map(p => `- ${p.type} (${p.severity}, ${p.probability}% probability) at ${p.location}`).join('\n')}
+
+Vulnerabilities:
+${analysisResult.vulnerabilities.map(v => `- ${v.cve} in ${v.component} (${v.severity})`).join('\n')}
+
+Risk Timeline:
+- Next 24h: ${analysisResult.timelineRisk.next24h}%
+- Next 7 days: ${analysisResult.timelineRisk.next7days}%
+- Next 30 days: ${analysisResult.timelineRisk.next30days}%`;
+    }
+
+    // Get API key from environment variable
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+
+    // Call Groq API
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'mixtral-8x7b-32768',
+        messages: [
+          { role: 'system', content: systemContext },
+          ...messages.filter(m => m.role !== 'system').slice(-10),
+          { role: 'user', content: inputMessage }
+        ],
+        temperature: 0.7,
+        max_tokens: 500
+      })
+    });
+
+    const data = await response.json();
+    
+    if (data.choices && data.choices[0]) {
+      const aiResponse = data.choices[0].message.content;
+      setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
+    } else {
+      throw new Error('Invalid response from AI');
+    }
+  } catch (error) {
+    console.error('AI Error:', error);
+    
+    // Fallback to rule-based responses if API fails
+    let response = '';
+    const query = inputMessage.toLowerCase();
+
+    if (analysisResult) {
+      if (query.includes('threat') || query.includes('risk')) {
+        response = `Based on the current analysis, your system has an **${analysisResult.overallThreatLevel} Risk** level with ${analysisResult.threatsDetected} threats detected. The most critical issues include:\n\n${analysisResult.predictions.slice(0, 2).map(p => `• **${p.type}** (${p.probability}% probability) - ${p.severity} severity\n  Impact: ${p.impact}`).join('\n\n')}\n\nI recommend addressing the critical issues immediately.`;
+      } else if (query.includes('critical') || query.includes('urgent')) {
+        const critical = analysisResult.predictions.filter(p => p.severity === 'Critical');
+        response = `You have **${analysisResult.criticalIssues} critical issues** that need immediate attention:\n\n${critical.map((p, i) => `${i + 1}. **${p.type}**\n   - Location: ${p.location}\n   - Impact: ${p.impact}\n   - Recommendation: ${p.recommendation}`).join('\n\n')}`;
       } else {
-        if (query.includes('hello') || query.includes('hi')) {
-          response = 'Hello! I\'m here to help you analyze and understand security threats. Upload files, enter an API endpoint, or start monitoring to begin the analysis, and I\'ll provide detailed insights.';
-        } else {
-          response = 'Please run an analysis first by uploading files, analyzing an API endpoint, or starting live monitoring. Once the analysis is complete, I can help you understand the results and provide detailed recommendations.';
-        }
+        response = `I can help you with:\n\n• **Threat Analysis** - Explain detected threats and their severity\n• **Recommendations** - Guide you through security improvements\n• **CVE Vulnerabilities** - Detail known security flaws\n• **Risk Timeline** - Discuss future risk predictions\n\nWhat would you like to know more about?`;
       }
+    } else {
+      response = 'Hello! I\'m here to help you analyze and understand security threats. Upload files, enter an API endpoint, or start monitoring to begin the analysis.';
+    }
 
-      setMessages(prev => [...prev, { role: 'assistant', content: response }]);
-      setIsTyping(false);
-    }, 1000 + Math.random() * 1000);
-  };
+    setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+  }
+  
+  setIsTyping(false);
+};
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
