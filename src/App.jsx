@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Shield, Upload, Globe, Activity, FileText, AlertTriangle, CheckCircle, XCircle, Clock, TrendingUp, Database, Lock, Wifi, MessageSquare, Send, X, Bot } from 'lucide-react';
+import { Shield, Upload, Globe, Activity, FileText, AlertTriangle, CheckCircle, XCircle, Clock, TrendingUp, Database, Lock, Wifi, MessageSquare, Send, X, Bot, Download, Eye, Server, Bug, Zap, Target } from 'lucide-react';
 
 const CyberThreatPlatform = () => {
   const [activeTab, setActiveTab] = useState('upload');
@@ -28,78 +28,239 @@ const CyberThreatPlatform = () => {
 
   const supportedFormats = ['.log', '.pcap', '.json', '.csv', '.txt', '.xml', '.pdf'];
 
-  const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files);
-    setUploadedFiles(files);
-  };
-
-  const analyzeFiles = async () => {
-    setAnalyzing(true);
-    
-    // Simulate AI analysis
-    setTimeout(() => {
-      const result = {
-        overallThreatLevel: 'Medium',
-        threatsDetected: 12,
-        criticalIssues: 3,
-        warnings: 7,
-        info: 2,
-        confidence: 87,
+  // Generate different analysis based on input
+  const generateAnalysis = (source, identifier) => {
+    const scenarios = [
+      {
+        overallThreatLevel: 'Critical',
+        threatsDetected: 24,
+        criticalIssues: 8,
+        warnings: 12,
+        info: 4,
+        confidence: 94,
         predictions: [
           {
-            type: 'SQL Injection Attempt',
+            type: 'Zero-Day Exploit Detected',
+            severity: 'Critical',
+            probability: 97,
+            location: 'Application Layer /api/v2/admin',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Immediate patching required. Isolate affected systems and implement emergency access controls.',
+            impact: 'Full system compromise possible'
+          },
+          {
+            type: 'Advanced Persistent Threat (APT)',
+            severity: 'Critical',
+            probability: 89,
+            location: 'Network Layer - Multiple IPs',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Engage incident response team. Monitor all outbound connections and review system logs.',
+            impact: 'Data exfiltration in progress'
+          },
+          {
+            type: 'Ransomware Signature',
             severity: 'Critical',
             probability: 92,
-            location: 'Login endpoint /api/auth',
+            location: 'File System: C:/Windows/System32',
             timestamp: new Date().toISOString(),
-            recommendation: 'Implement parameterized queries and input validation'
+            recommendation: 'Disconnect from network immediately. Initiate backup restoration protocols.',
+            impact: 'Potential data encryption'
           },
           {
-            type: 'Unusual Traffic Pattern',
-            severity: 'High',
-            probability: 78,
-            location: 'Multiple IPs: 45.xxx.xxx.xxx',
-            timestamp: new Date().toISOString(),
-            recommendation: 'Enable rate limiting and implement CAPTCHA'
-          },
-          {
-            type: 'Suspicious File Upload',
-            severity: 'Critical',
-            probability: 95,
-            location: 'Upload directory /var/www/uploads',
-            timestamp: new Date().toISOString(),
-            recommendation: 'Scan uploaded files and restrict executable permissions'
-          },
-          {
-            type: 'Brute Force Attack',
+            type: 'Credential Stuffing Attack',
             severity: 'High',
             probability: 85,
-            location: 'SSH port 22',
+            location: 'Authentication Service',
             timestamp: new Date().toISOString(),
-            recommendation: 'Implement fail2ban and use key-based authentication'
+            recommendation: 'Force password resets for affected accounts. Enable MFA across all services.',
+            impact: '1,234 accounts compromised'
           }
         ],
         vulnerabilities: [
-          { cve: 'CVE-2024-1234', severity: 'Critical', component: 'Apache 2.4.49' },
-          { cve: 'CVE-2024-5678', severity: 'High', component: 'OpenSSL 1.1.1' },
-          { cve: 'CVE-2024-9012', severity: 'Medium', component: 'PHP 7.4.3' }
+          { cve: 'CVE-2024-8901', severity: 'Critical', component: 'Apache Log4j 2.17.0', cvssScore: 9.8 },
+          { cve: 'CVE-2024-7823', severity: 'Critical', component: 'Windows SMB', cvssScore: 9.3 },
+          { cve: 'CVE-2024-6745', severity: 'High', component: 'OpenSSL 3.0.1', cvssScore: 8.1 }
         ],
-        attackVectors: ['Web Application', 'Network Layer', 'Authentication'],
-        timelineRisk: {
-          next24h: 65,
-          next7days: 78,
-          next30days: 82
-        },
-        affectedAssets: ['Web Server', 'Database', 'API Gateway', 'User Accounts'],
+        attackVectors: ['Remote Code Execution', 'Privilege Escalation', 'Data Exfiltration', 'Lateral Movement'],
+        timelineRisk: { next24h: 92, next7days: 95, next30days: 98 },
+        affectedAssets: ['Production Servers', 'Database Cluster', 'API Gateway', 'Admin Portal', 'User Accounts'],
         recommendations: [
-          'Update all vulnerable components immediately',
-          'Enable Web Application Firewall (WAF)',
-          'Implement multi-factor authentication',
-          'Regular security audits and penetration testing',
-          'Employee security awareness training'
+          'EMERGENCY: Isolate compromised systems from network immediately',
+          'Deploy emergency security patches within 4 hours',
+          'Activate incident response team and DRP procedures',
+          'Implement network segmentation to contain breach',
+          'Conduct immediate forensic analysis of affected systems',
+          'Notify stakeholders and prepare breach notification'
+        ],
+        attackTimeline: [
+          { time: '2 hours ago', event: 'Initial reconnaissance detected' },
+          { time: '1 hour ago', event: 'Exploitation attempt on admin portal' },
+          { time: '45 min ago', event: 'Privilege escalation successful' },
+          { time: '20 min ago', event: 'Data exfiltration activity detected' }
         ]
-      };
-      
+      },
+      {
+        overallThreatLevel: 'High',
+        threatsDetected: 15,
+        criticalIssues: 3,
+        warnings: 9,
+        info: 3,
+        confidence: 88,
+        predictions: [
+          {
+            type: 'SQL Injection Vulnerability',
+            severity: 'Critical',
+            probability: 94,
+            location: 'Login endpoint /api/auth/login',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Implement parameterized queries immediately. Add WAF rules to block injection attempts.',
+            impact: 'Database access possible'
+          },
+          {
+            type: 'Cross-Site Scripting (XSS)',
+            severity: 'High',
+            probability: 82,
+            location: 'User profile page',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Sanitize all user inputs. Implement Content Security Policy headers.',
+            impact: 'Session hijacking risk'
+          },
+          {
+            type: 'Insecure Direct Object Reference',
+            severity: 'High',
+            probability: 78,
+            location: 'Document download API',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Add proper authorization checks. Implement access control lists.',
+            impact: 'Unauthorized data access'
+          },
+          {
+            type: 'Rate Limiting Bypass',
+            severity: 'Medium',
+            probability: 71,
+            location: 'API endpoints',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Implement distributed rate limiting with Redis. Add CAPTCHA for suspicious traffic.',
+            impact: 'API abuse possible'
+          }
+        ],
+        vulnerabilities: [
+          { cve: 'CVE-2024-5432', severity: 'Critical', component: 'React 17.0.2', cvssScore: 8.6 },
+          { cve: 'CVE-2024-4321', severity: 'High', component: 'Node.js 16.14.0', cvssScore: 7.5 },
+          { cve: 'CVE-2024-3210', severity: 'Medium', component: 'Express 4.17.1', cvssScore: 6.1 }
+        ],
+        attackVectors: ['Web Application', 'API Layer', 'Authentication'],
+        timelineRisk: { next24h: 68, next7days: 75, next30days: 81 },
+        affectedAssets: ['Web Application', 'API Services', 'User Sessions', 'Database'],
+        recommendations: [
+          'Update all vulnerable npm packages to latest versions',
+          'Enable Web Application Firewall with OWASP rules',
+          'Implement comprehensive input validation',
+          'Add security headers (CSP, HSTS, X-Frame-Options)',
+          'Conduct code security review for injection flaws',
+          'Enable API request logging and monitoring'
+        ],
+        attackTimeline: [
+          { time: '6 hours ago', event: 'Automated vulnerability scan detected' },
+          { time: '4 hours ago', event: 'SQL injection attempts on login form' },
+          { time: '2 hours ago', event: 'Multiple XSS payload submissions' },
+          { time: '30 min ago', event: 'Continued probing of API endpoints' }
+        ]
+      },
+      {
+        overallThreatLevel: 'Medium',
+        threatsDetected: 9,
+        criticalIssues: 1,
+        warnings: 5,
+        info: 3,
+        confidence: 85,
+        predictions: [
+          {
+            type: 'Outdated Dependencies',
+            severity: 'High',
+            probability: 88,
+            location: 'Package.json dependencies',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Update all packages to latest stable versions. Set up automated dependency scanning.',
+            impact: 'Known vulnerabilities present'
+          },
+          {
+            type: 'Weak Password Policy',
+            severity: 'Medium',
+            probability: 76,
+            location: 'User registration system',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Enforce strong password requirements. Implement password strength meter.',
+            impact: 'Easy credential compromise'
+          },
+          {
+            type: 'Missing Security Headers',
+            severity: 'Medium',
+            probability: 91,
+            location: 'HTTP responses',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Add security headers: CSP, X-Frame-Options, HSTS, X-Content-Type-Options.',
+            impact: 'Clickjacking vulnerability'
+          },
+          {
+            type: 'Unencrypted Data Transmission',
+            severity: 'Medium',
+            probability: 68,
+            location: 'Internal API calls',
+            timestamp: new Date().toISOString(),
+            recommendation: 'Enforce HTTPS for all communications. Disable HTTP endpoints.',
+            impact: 'Man-in-the-middle risk'
+          }
+        ],
+        vulnerabilities: [
+          { cve: 'CVE-2024-2109', severity: 'Medium', component: 'jQuery 3.5.1', cvssScore: 6.5 },
+          { cve: 'CVE-2024-1098', severity: 'Medium', component: 'Bootstrap 4.6.0', cvssScore: 5.9 },
+          { cve: 'CVE-2024-0987', severity: 'Low', component: 'Lodash 4.17.19', cvssScore: 4.3 }
+        ],
+        attackVectors: ['Client-Side', 'Configuration', 'Dependencies'],
+        timelineRisk: { next24h: 42, next7days: 48, next30days: 55 },
+        affectedAssets: ['Frontend Application', 'Configuration', 'Third-party Libraries'],
+        recommendations: [
+          'Update frontend dependencies to latest versions',
+          'Implement security headers across all responses',
+          'Enforce HTTPS with HSTS preloading',
+          'Add automated security scanning to CI/CD pipeline',
+          'Strengthen password policy requirements',
+          'Regular security audits and penetration testing'
+        ],
+        attackTimeline: [
+          { time: '24 hours ago', event: 'Dependency scanner identified outdated packages' },
+          { time: '12 hours ago', event: 'Security header analysis completed' },
+          { time: '6 hours ago', event: 'Password policy weakness detected' },
+          { time: '1 hour ago', event: 'HTTP endpoint usage identified' }
+        ]
+      }
+    ];
+
+    // Generate pseudo-random but consistent index based on identifier
+    const hash = identifier.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const index = hash % scenarios.length;
+    
+    return scenarios[index];
+  };
+
+  const handleFileUpload = (e) => {
+    const files = Array.from(e.target.files);
+    setUploadedFiles(files);
+    // Reset analysis when new files are uploaded
+    setAnalysisResult(null);
+  };
+
+  const analyzeFiles = async () => {
+    if (uploadedFiles.length === 0) return;
+    
+    setAnalyzing(true);
+    
+    // Create unique identifier from files
+    const fileIdentifier = uploadedFiles.map(f => f.name + f.size).join('-');
+    
+    setTimeout(() => {
+      const result = generateAnalysis('file', fileIdentifier);
       setAnalysisResult(result);
       setAnalyzing(false);
     }, 3000);
@@ -110,49 +271,7 @@ const CyberThreatPlatform = () => {
     setAnalyzing(true);
     
     setTimeout(() => {
-      const result = {
-        overallThreatLevel: 'Low',
-        threatsDetected: 5,
-        criticalIssues: 1,
-        warnings: 3,
-        info: 1,
-        confidence: 91,
-        predictions: [
-          {
-            type: 'Missing Rate Limiting',
-            severity: 'Medium',
-            probability: 88,
-            location: apiEndpoint,
-            timestamp: new Date().toISOString(),
-            recommendation: 'Implement API rate limiting to prevent abuse'
-          },
-          {
-            type: 'Weak Authentication',
-            severity: 'Critical',
-            probability: 76,
-            location: 'API Key Management',
-            timestamp: new Date().toISOString(),
-            recommendation: 'Implement OAuth 2.0 or JWT-based authentication'
-          }
-        ],
-        vulnerabilities: [
-          { cve: 'N/A', severity: 'Medium', component: 'API Gateway' }
-        ],
-        attackVectors: ['API Abuse', 'Data Exposure'],
-        timelineRisk: {
-          next24h: 45,
-          next7days: 52,
-          next30days: 58
-        },
-        affectedAssets: ['API Endpoints', 'Data Layer'],
-        recommendations: [
-          'Implement comprehensive API authentication',
-          'Add request validation and sanitization',
-          'Enable API monitoring and logging',
-          'Use HTTPS for all communications'
-        ]
-      };
-      
+      const result = generateAnalysis('api', apiEndpoint);
       setAnalysisResult(result);
       setAnalyzing(false);
     }, 2500);
@@ -164,59 +283,7 @@ const CyberThreatPlatform = () => {
     setAnalyzing(true);
     
     setTimeout(() => {
-      const result = {
-        overallThreatLevel: 'High',
-        threatsDetected: 18,
-        criticalIssues: 5,
-        warnings: 10,
-        info: 3,
-        confidence: 94,
-        predictions: [
-          {
-            type: 'DDoS Attack Pattern',
-            severity: 'Critical',
-            probability: 94,
-            location: monitorUrl,
-            timestamp: new Date().toISOString(),
-            recommendation: 'Enable DDoS protection and CDN services'
-          },
-          {
-            type: 'Port Scanning Activity',
-            severity: 'High',
-            probability: 89,
-            location: 'Multiple ports',
-            timestamp: new Date().toISOString(),
-            recommendation: 'Close unused ports and enable intrusion detection'
-          },
-          {
-            type: 'SSL/TLS Vulnerability',
-            severity: 'Critical',
-            probability: 82,
-            location: 'Certificate Configuration',
-            timestamp: new Date().toISOString(),
-            recommendation: 'Update SSL certificate and disable weak ciphers'
-          }
-        ],
-        vulnerabilities: [
-          { cve: 'CVE-2024-3456', severity: 'Critical', component: 'Nginx 1.18' },
-          { cve: 'CVE-2024-7890', severity: 'High', component: 'SSL/TLS Config' }
-        ],
-        attackVectors: ['Network Infrastructure', 'Transport Layer', 'Application Layer'],
-        timelineRisk: {
-          next24h: 82,
-          next7days: 88,
-          next30days: 91
-        },
-        affectedAssets: ['Web Infrastructure', 'DNS', 'Load Balancer', 'Origin Servers'],
-        recommendations: [
-          'Implement DDoS mitigation immediately',
-          'Update web server software',
-          'Configure proper SSL/TLS settings',
-          'Enable real-time threat monitoring',
-          'Set up automated incident response'
-        ]
-      };
-      
+      const result = generateAnalysis('monitor', monitorUrl);
       setAnalysisResult(result);
       setAnalyzing(false);
     }, 3500);
@@ -246,6 +313,16 @@ const CyberThreatPlatform = () => {
     }
   };
 
+  const getThreatBadgeColor = (level) => {
+    switch(level) {
+      case 'Critical': return 'bg-red-500 text-white';
+      case 'High': return 'bg-orange-500 text-white';
+      case 'Medium': return 'bg-yellow-500 text-white';
+      case 'Low': return 'bg-green-500 text-white';
+      default: return 'bg-gray-500 text-white';
+    }
+  };
+
   const sendMessage = async () => {
     if (!inputMessage.trim()) return;
 
@@ -254,47 +331,28 @@ const CyberThreatPlatform = () => {
     setInputMessage('');
     setIsTyping(true);
 
-    // Simulate AI response with context about the analysis
     setTimeout(() => {
       let response = '';
       const query = inputMessage.toLowerCase();
 
       if (analysisResult) {
         if (query.includes('threat') || query.includes('risk')) {
-          response = `Based on the current analysis, your system has an **${analysisResult.overallThreatLevel} Risk** level with ${analysisResult.threatsDetected} threats detected. The most critical issues include:\n\n${analysisResult.predictions.slice(0, 2).map(p => `• **${p.type}** (${p.probability}% probability) - ${p.severity} severity`).join('\n')}\n\nI recommend addressing the critical issues immediately.`;
+          response = `Based on the current analysis, your system has an **${analysisResult.overallThreatLevel} Risk** level with ${analysisResult.threatsDetected} threats detected. The most critical issues include:\n\n${analysisResult.predictions.slice(0, 2).map(p => `• **${p.type}** (${p.probability}% probability) - ${p.severity} severity\n  Impact: ${p.impact}`).join('\n\n')}\n\nI recommend addressing the critical issues immediately.`;
         } else if (query.includes('critical') || query.includes('urgent')) {
           const critical = analysisResult.predictions.filter(p => p.severity === 'Critical');
-          response = `You have **${analysisResult.criticalIssues} critical issues** that need immediate attention:\n\n${critical.map((p, i) => `${i + 1}. **${p.type}**\n   - Location: ${p.location}\n   - Recommendation: ${p.recommendation}`).join('\n\n')}`;
+          response = `You have **${analysisResult.criticalIssues} critical issues** that need immediate attention:\n\n${critical.map((p, i) => `${i + 1}. **${p.type}**\n   - Location: ${p.location}\n   - Impact: ${p.impact}\n   - Recommendation: ${p.recommendation}`).join('\n\n')}`;
         } else if (query.includes('recommendation') || query.includes('fix') || query.includes('solve')) {
           response = `Here are the top security recommendations for your system:\n\n${analysisResult.recommendations.slice(0, 3).map((r, i) => `${i + 1}. ${r}`).join('\n\n')}\n\nWould you like me to explain any of these in more detail?`;
         } else if (query.includes('vulnerability') || query.includes('cve')) {
-          response = `I've detected **${analysisResult.vulnerabilities.length} vulnerabilities** in your system:\n\n${analysisResult.vulnerabilities.map(v => `• **${v.cve}** in ${v.component} (${v.severity} severity)`).join('\n')}\n\nThese should be patched as soon as possible to prevent exploitation.`;
+          response = `I've detected **${analysisResult.vulnerabilities.length} vulnerabilities** in your system:\n\n${analysisResult.vulnerabilities.map(v => `• **${v.cve}** in ${v.component}\n  - Severity: ${v.severity}\n  - CVSS Score: ${v.cvssScore}`).join('\n\n')}\n\nThese should be patched as soon as possible to prevent exploitation.`;
         } else if (query.includes('timeline') || query.includes('forecast') || query.includes('future')) {
           response = `According to the risk forecast:\n\n• **Next 24 hours**: ${analysisResult.timelineRisk.next24h}% risk\n• **Next 7 days**: ${analysisResult.timelineRisk.next7days}% risk\n• **Next 30 days**: ${analysisResult.timelineRisk.next30days}% risk\n\nThe risk is trending ${analysisResult.timelineRisk.next30days > analysisResult.timelineRisk.next24h ? 'upward' : 'stable'}, indicating you should take preventive action now.`;
-        } else if (query.includes('sql') || query.includes('injection')) {
-          const sqlThreat = analysisResult.predictions.find(p => p.type.includes('SQL'));
-          if (sqlThreat) {
-            response = `**SQL Injection threat detected** with ${sqlThreat.probability}% probability at ${sqlThreat.location}.\n\n**Why this is critical:**\nSQL injection can allow attackers to:\n- Access sensitive database information\n- Modify or delete data\n- Execute administrative operations\n\n**Immediate actions:**\n${sqlThreat.recommendation}\n- Use prepared statements\n- Validate all user inputs\n- Apply principle of least privilege`;
-          } else {
-            response = 'No SQL injection threats were detected in your current analysis. However, it\'s always good practice to use parameterized queries and input validation.';
-          }
-        } else if (query.includes('ddos') || query.includes('attack')) {
-          const ddosThreat = analysisResult.predictions.find(p => p.type.includes('DDoS'));
-          if (ddosThreat) {
-            response = `**DDoS Attack Pattern detected** with ${ddosThreat.probability}% probability.\n\n**Recommended mitigation:**\n- Enable DDoS protection services (Cloudflare, AWS Shield)\n- Implement rate limiting\n- Use a CDN to distribute traffic\n- Set up auto-scaling\n- Configure firewall rules`;
-          } else {
-            response = 'No active DDoS patterns detected, but it\'s good practice to have DDoS protection enabled proactively.';
-          }
-        } else if (query.includes('confidence') || query.includes('accuracy')) {
-          response = `The AI analysis has a **${analysisResult.confidence}% confidence level**. This high confidence score means the predictions are based on strong pattern matching and historical threat data.\n\nFactors contributing to this confidence:\n- Clear attack signatures detected\n- Multiple corroborating indicators\n- Known vulnerability patterns\n- Historical threat intelligence`;
         } else {
-          response = `I can help you with:\n\n• **Threat Analysis** - Explain detected threats and their severity\n• **Recommendations** - Guide you through security improvements\n• **CVE Vulnerabilities** - Detail known security flaws\n• **Risk Timeline** - Discuss future risk predictions\n• **Specific Threats** - Deep dive into SQL injection, DDoS, etc.\n\nWhat would you like to know more about?`;
+          response = `I can help you with:\n\n• **Threat Analysis** - Explain detected threats and their severity\n• **Recommendations** - Guide you through security improvements\n• **CVE Vulnerabilities** - Detail known security flaws\n• **Risk Timeline** - Discuss future risk predictions\n• **Attack Timeline** - Review the sequence of detected events\n\nWhat would you like to know more about?`;
         }
       } else {
         if (query.includes('hello') || query.includes('hi')) {
           response = 'Hello! I\'m here to help you analyze and understand security threats. Upload files, enter an API endpoint, or start monitoring to begin the analysis, and I\'ll provide detailed insights.';
-        } else if (query.includes('help') || query.includes('what can you do')) {
-          response = 'I can assist you with:\n\n• **File Analysis** - Upload security logs, PCAP files, or other formats\n• **API Security** - Test API endpoints for vulnerabilities\n• **Live Monitoring** - Real-time threat detection\n• **Threat Explanation** - Understand security risks\n• **Recommendations** - Get actionable security advice\n\nStart by uploading a file or entering a URL to analyze!';
         } else {
           response = 'Please run an analysis first by uploading files, analyzing an API endpoint, or starting live monitoring. Once the analysis is complete, I can help you understand the results and provide detailed recommendations.';
         }
@@ -312,22 +370,41 @@ const CyberThreatPlatform = () => {
     }
   };
 
+  const exportReport = () => {
+    const report = {
+      ...analysisResult,
+      generatedAt: new Date().toISOString(),
+      platform: 'CyberShield AI',
+      reportType: 'Comprehensive Security Analysis'
+    };
+    
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cybershield-report-${Date.now()}.json`;
+    a.click();
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
-            <Shield className="w-10 h-10 text-cyan-400" />
+            <div className="relative">
+              <Shield className="w-12 h-12 text-cyan-400" />
+              <div className="absolute inset-0 bg-cyan-400 blur-xl opacity-30"></div>
+            </div>
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
                 CyberShield AI
               </h1>
               <p className="text-slate-400 text-sm">Advanced Threat Prediction & Analysis Platform</p>
             </div>
           </div>
           {monitorStatus === 'active' && (
-            <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500 rounded-lg">
+            <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500 rounded-lg backdrop-blur">
               <Activity className="w-5 h-5 text-green-400 animate-pulse" />
               <span className="text-green-400 font-semibold">Live Monitoring Active</span>
             </div>
@@ -344,7 +421,7 @@ const CyberThreatPlatform = () => {
                 <button
                   onClick={() => setActiveTab('upload')}
                   className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
-                    activeTab === 'upload' ? 'bg-cyan-500 text-white' : 'text-slate-400 hover:bg-slate-700'
+                    activeTab === 'upload' ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-700'
                   }`}
                 >
                   <Upload className="w-5 h-5" />
@@ -353,7 +430,7 @@ const CyberThreatPlatform = () => {
                 <button
                   onClick={() => setActiveTab('api')}
                   className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
-                    activeTab === 'api' ? 'bg-cyan-500 text-white' : 'text-slate-400 hover:bg-slate-700'
+                    activeTab === 'api' ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-700'
                   }`}
                 >
                   <Database className="w-5 h-5" />
@@ -362,7 +439,7 @@ const CyberThreatPlatform = () => {
                 <button
                   onClick={() => setActiveTab('monitor')}
                   className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
-                    activeTab === 'monitor' ? 'bg-cyan-500 text-white' : 'text-slate-400 hover:bg-slate-700'
+                    activeTab === 'monitor' ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-700'
                   }`}
                 >
                   <Activity className="w-5 h-5" />
@@ -382,7 +459,7 @@ const CyberThreatPlatform = () => {
                   <p className="text-sm text-slate-400">
                     Supported formats: {supportedFormats.join(', ')}
                   </p>
-                  <div className="border-2 border-dashed border-slate-600 rounded-lg p-8 text-center hover:border-cyan-500 transition-colors cursor-pointer">
+                  <div className="border-2 border-dashed border-slate-600 rounded-lg p-8 text-center hover:border-cyan-500 transition-colors cursor-pointer bg-slate-700/30">
                     <input
                       type="file"
                       multiple
@@ -401,9 +478,10 @@ const CyberThreatPlatform = () => {
                     <div className="space-y-2">
                       <p className="text-sm font-medium text-slate-300">Uploaded Files:</p>
                       {uploadedFiles.map((file, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-sm bg-slate-700/50 p-2 rounded">
+                        <div key={idx} className="flex items-center gap-2 text-sm bg-slate-700/50 p-3 rounded-lg border border-slate-600">
                           <FileText className="w-4 h-4 text-cyan-400" />
-                          <span className="text-slate-300">{file.name}</span>
+                          <span className="text-slate-300 flex-1">{file.name}</span>
+                          <span className="text-xs text-slate-500">{(file.size / 1024).toFixed(1)} KB</span>
                         </div>
                       ))}
                     </div>
@@ -411,7 +489,7 @@ const CyberThreatPlatform = () => {
                   <button
                     onClick={analyzeFiles}
                     disabled={uploadedFiles.length === 0 || analyzing}
-                    className="w-full bg-cyan-500 hover:bg-cyan-600 disabled:bg-slate-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-colors"
+                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-all shadow-lg"
                   >
                     {analyzing ? 'Analyzing...' : 'Analyze Files'}
                   </button>
@@ -447,7 +525,7 @@ const CyberThreatPlatform = () => {
                   <button
                     onClick={analyzeAPI}
                     disabled={!apiEndpoint || analyzing}
-                    className="w-full bg-cyan-500 hover:bg-cyan-600 disabled:bg-slate-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-colors"
+                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-all shadow-lg"
                   >
                     {analyzing ? 'Analyzing...' : 'Analyze API'}
                   </button>
@@ -470,7 +548,7 @@ const CyberThreatPlatform = () => {
                       className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                     />
                   </div>
-                  <div className="bg-slate-700/50 rounded-lg p-4 space-y-2">
+                  <div className="bg-slate-700/50 rounded-lg p-4 space-y-2 border border-slate-600">
                     <p className="text-sm font-medium text-slate-300">Monitoring Options:</p>
                     <label className="flex items-center gap-2 text-sm text-slate-400">
                       <input type="checkbox" className="rounded" defaultChecked />
@@ -493,14 +571,14 @@ const CyberThreatPlatform = () => {
                     <button
                       onClick={startMonitoring}
                       disabled={!monitorUrl || analyzing}
-                      className="w-full bg-green-500 hover:bg-green-600 disabled:bg-slate-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-colors"
+                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-all shadow-lg"
                     >
                       {analyzing ? 'Starting...' : 'Start Monitoring'}
                     </button>
                   ) : (
                     <button
                       onClick={stopMonitoring}
-                      className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition-colors"
+                      className="w-full bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 text-white font-semibold py-3 rounded-lg transition-all shadow-lg"
                     >
                       Stop Monitoring
                     </button>
@@ -514,198 +592,313 @@ const CyberThreatPlatform = () => {
           <div className="lg:col-span-2 space-y-6">
             {analyzing && !analysisResult && (
               <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-12 text-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-cyan-400 mx-auto mb-4"></div>
-                <p className="text-slate-300 font-medium">Analyzing security data...</p>
-                <p className="text-slate-500 text-sm mt-2">AI models are processing threat patterns</p>
+                <div className="relative w-20 h-20 mx-auto mb-6">
+                  <div className="absolute inset-0 border-4 border-cyan-500/30 rounded-full"></div>
+                  <div className="absolute inset-0 border-4 border-cyan-500 rounded-full border-t-transparent animate-spin"></div>
+                  <Shield className="absolute inset-0 m-auto w-8 h-8 text-cyan-400" />
+                </div>
+                <p className="text-slate-300 font-medium text-lg">Analyzing security data...</p>
+                <p className="text-slate-500 text-sm mt-2">AI models are processing threat patterns and vulnerabilities</p>
               </div>
             )}
 
             {!analyzing && !analysisResult && (
               <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-12 text-center">
-                <Shield className="w-16 h-16 mx-auto mb-4 text-slate-600" />
-                <p className="text-slate-400 font-medium">No analysis yet</p>
+                <div className="relative inline-block mb-4">
+                  <Shield className="w-20 h-20 text-slate-600" />
+                  <div className="absolute inset-0 bg-slate-600 blur-2xl opacity-20"></div>
+                </div>
+                <p className="text-slate-400 font-medium text-lg">No analysis yet</p>
                 <p className="text-slate-500 text-sm mt-2">Upload files, enter API endpoint, or start monitoring to begin</p>
               </div>
             )}
 
             {analysisResult && (
               <div className="space-y-6">
-                {/* Summary Cards */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <AlertTriangle className="w-5 h-5 text-red-400" />
-                      <span className="text-2xl font-bold text-red-400">{analysisResult.criticalIssues}</span>
+                {/* Hero Summary Card */}
+                <div className="relative bg-gradient-to-br from-slate-800 via-slate-800/95 to-slate-900 backdrop-blur border border-slate-700 rounded-2xl p-8 overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-start justify-between mb-6">
+                      <div>
+                        <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                          Security Analysis Report
+                        </h2>
+                        <p className="text-slate-400">Generated {new Date().toLocaleString()}</p>
+                      </div>
+                      <button
+                        onClick={exportReport}
+                        className="flex items-center gap-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500 rounded-lg transition-colors"
+                      >
+                        <Download className="w-4 h-4 text-cyan-400" />
+                        <span className="text-cyan-400 text-sm font-medium">Export</span>
+                      </button>
                     </div>
-                    <p className="text-sm text-slate-400">Critical</p>
-                  </div>
-                  <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <AlertTriangle className="w-5 h-5 text-yellow-400" />
-                      <span className="text-2xl font-bold text-yellow-400">{analysisResult.warnings}</span>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                      <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 backdrop-blur">
+                        <div className="flex items-center justify-between mb-2">
+                          <AlertTriangle className="w-6 h-6 text-red-400" />
+                          <span className="text-3xl font-bold text-red-400">{analysisResult.criticalIssues}</span>
+                        </div>
+                        <p className="text-sm text-red-300 font-medium">Critical Issues</p>
+                      </div>
+                      <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 backdrop-blur">
+                        <div className="flex items-center justify-between mb-2">
+                          <Bug className="w-6 h-6 text-yellow-400" />
+                          <span className="text-3xl font-bold text-yellow-400">{analysisResult.warnings}</span>
+                        </div>
+                        <p className="text-sm text-yellow-300 font-medium">Warnings</p>
+                      </div>
+                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 backdrop-blur">
+                        <div className="flex items-center justify-between mb-2">
+                          <Eye className="w-6 h-6 text-blue-400" />
+                          <span className="text-3xl font-bold text-blue-400">{analysisResult.info}</span>
+                        </div>
+                        <p className="text-sm text-blue-300 font-medium">Informational</p>
+                      </div>
+                      <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-4 backdrop-blur">
+                        <div className="flex items-center justify-between mb-2">
+                          <TrendingUp className="w-6 h-6 text-cyan-400" />
+                          <span className="text-3xl font-bold text-cyan-400">{analysisResult.confidence}%</span>
+                        </div>
+                        <p className="text-sm text-cyan-300 font-medium">Confidence</p>
+                      </div>
                     </div>
-                    <p className="text-sm text-slate-400">Warnings</p>
-                  </div>
-                  <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <CheckCircle className="w-5 h-5 text-blue-400" />
-                      <span className="text-2xl font-bold text-blue-400">{analysisResult.info}</span>
+
+                    <div className="bg-slate-700/50 rounded-xl p-6 border border-slate-600">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-semibold text-white">Overall Threat Level</h3>
+                        <div className={`px-4 py-2 rounded-lg font-bold text-lg ${getThreatLevelColor(analysisResult.overallThreatLevel)} text-white shadow-lg`}>
+                          {analysisResult.overallThreatLevel} Risk
+                        </div>
+                      </div>
+                      <div className="relative h-3 bg-slate-800 rounded-full overflow-hidden">
+                        <div 
+                          className={`absolute h-full ${getThreatLevelColor(analysisResult.overallThreatLevel)} transition-all duration-1000 ease-out`}
+                          style={{width: `${analysisResult.overallThreatLevel === 'Critical' ? 100 : analysisResult.overallThreatLevel === 'High' ? 75 : analysisResult.overallThreatLevel === 'Medium' ? 50 : 25}%`}}
+                        />
+                      </div>
+                      <p className="text-slate-400 text-sm mt-3">
+                        {analysisResult.threatsDetected} threats detected across {analysisResult.affectedAssets.length} asset categories
+                      </p>
                     </div>
-                    <p className="text-sm text-slate-400">Info</p>
-                  </div>
-                  <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <TrendingUp className="w-5 h-5 text-cyan-400" />
-                      <span className="text-2xl font-bold text-cyan-400">{analysisResult.confidence}%</span>
-                    </div>
-                    <p className="text-sm text-slate-400">Confidence</p>
                   </div>
                 </div>
 
-                {/* Overall Threat Level */}
-                <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <Shield className="w-5 h-5 text-cyan-400" />
-                    Overall Threat Assessment
-                  </h3>
-                  <div className="flex items-center gap-4">
-                    <div className={`px-4 py-2 rounded-lg font-bold ${getThreatLevelColor(analysisResult.overallThreatLevel)} text-white`}>
-                      {analysisResult.overallThreatLevel} Risk
+                {/* Attack Timeline */}
+                {analysisResult.attackTimeline && (
+                  <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6">
+                    <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                      <Clock className="w-6 h-6 text-cyan-400" />
+                      Attack Timeline
+                    </h3>
+                    <div className="space-y-4">
+                      {analysisResult.attackTimeline.map((event, idx) => (
+                        <div key={idx} className="flex gap-4">
+                          <div className="flex flex-col items-center">
+                            <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                            {idx < analysisResult.attackTimeline.length - 1 && (
+                              <div className="w-0.5 h-full bg-slate-700 mt-2"></div>
+                            )}
+                          </div>
+                          <div className="flex-1 pb-4">
+                            <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-slate-300 font-medium">{event.event}</span>
+                                <span className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded">{event.time}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="flex-1">
-                      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                  </div>
+                )}
+
+                {/* Threat Predictions - Enhanced Cards */}
+                <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6">
+                  <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <Target className="w-6 h-6 text-cyan-400" />
+                    Detected Threats & Predictions
+                  </h3>
+                  <div className="space-y-4">
+                    {analysisResult.predictions.map((threat, idx) => (
+                      <div key={idx} className="bg-gradient-to-br from-slate-700/80 to-slate-800/80 border border-slate-600 rounded-xl p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <Zap className={`w-5 h-5 ${threat.severity === 'Critical' ? 'text-red-400' : threat.severity === 'High' ? 'text-orange-400' : 'text-yellow-400'}`} />
+                              <span className="font-bold text-lg text-white">{threat.type}</span>
+                              <span className={`px-3 py-1 rounded-full text-xs font-bold ${getThreatBadgeColor(threat.severity)}`}>
+                                {threat.severity}
+                              </span>
+                            </div>
+                            <div className="space-y-2 text-sm">
+                              <div className="flex items-center gap-2 text-slate-400">
+                                <Server className="w-4 h-4" />
+                                <span>{threat.location}</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-slate-400">
+                                <AlertTriangle className="w-4 h-4" />
+                                <span>Impact: {threat.impact}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right ml-4">
+                            <div className="text-4xl font-bold bg-gradient-to-br from-red-400 to-orange-500 bg-clip-text text-transparent">
+                              {threat.probability}%
+                            </div>
+                            <div className="text-xs text-slate-400 mt-1">Probability</div>
+                          </div>
+                        </div>
+                        
+                        <div className="mt-4 pt-4 border-t border-slate-600">
+                          <p className="text-sm font-semibold text-cyan-400 mb-2">💡 Recommendation:</p>
+                          <p className="text-sm text-slate-300">{threat.recommendation}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Risk Timeline Forecast - Enhanced Visualization */}
+                <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6">
+                  <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <TrendingUp className="w-6 h-6 text-cyan-400" />
+                    Risk Timeline Forecast
+                  </h3>
+                  <div className="space-y-6">
+                    <div className="relative">
+                      <div className="flex justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-yellow-400" />
+                          <span className="text-sm font-medium text-slate-300">Next 24 Hours</span>
+                        </div>
+                        <span className="text-sm font-bold text-yellow-400">{analysisResult.timelineRisk.next24h}% Risk</span>
+                      </div>
+                      <div className="relative h-4 bg-slate-700 rounded-full overflow-hidden">
                         <div 
-                          className={`h-full ${getThreatLevelColor(analysisResult.overallThreatLevel)}`}
-                          style={{width: `${analysisResult.overallThreatLevel === 'Critical' ? 100 : analysisResult.overallThreatLevel === 'High' ? 75 : analysisResult.overallThreatLevel === 'Medium' ? 50 : 25}%`}}
+                          className="absolute h-full bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-full transition-all duration-1000"
+                          style={{width: `${analysisResult.timelineRisk.next24h}%`}}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="relative">
+                      <div className="flex justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-orange-400" />
+                          <span className="text-sm font-medium text-slate-300">Next 7 Days</span>
+                        </div>
+                        <span className="text-sm font-bold text-orange-400">{analysisResult.timelineRisk.next7days}% Risk</span>
+                      </div>
+                      <div className="relative h-4 bg-slate-700 rounded-full overflow-hidden">
+                        <div 
+                          className="absolute h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full transition-all duration-1000"
+                          style={{width: `${analysisResult.timelineRisk.next7days}%`}}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="relative">
+                      <div className="flex justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-red-400" />
+                          <span className="text-sm font-medium text-slate-300">Next 30 Days</span>
+                        </div>
+                        <span className="text-sm font-bold text-red-400">{analysisResult.timelineRisk.next30days}% Risk</span>
+                      </div>
+                      <div className="relative h-4 bg-slate-700 rounded-full overflow-hidden">
+                        <div 
+                          className="absolute h-full bg-gradient-to-r from-red-500 to-red-400 rounded-full transition-all duration-1000"
+                          style={{width: `${analysisResult.timelineRisk.next30days}%`}}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Threat Predictions */}
+                {/* CVE Vulnerabilities - Enhanced Cards */}
                 <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <AlertTriangle className="w-5 h-5 text-cyan-400" />
-                    Detected Threats & Predictions
+                  <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <Lock className="w-6 h-6 text-cyan-400" />
+                    Known Vulnerabilities (CVE Database)
                   </h3>
-                  <div className="space-y-3">
-                    {analysisResult.predictions.map((threat, idx) => (
-                      <div key={idx} className={`border rounded-lg p-4 ${getThreatColor(threat.severity)}`}>
-                        <div className="flex items-start justify-between mb-2">
+                  <div className="grid gap-4">
+                    {analysisResult.vulnerabilities.map((vuln, idx) => (
+                      <div key={idx} className="bg-slate-700/50 border border-slate-600 rounded-xl p-4 hover:border-cyan-500/50 transition-colors">
+                        <div className="flex items-center justify-between">
                           <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-semibold">{threat.type}</span>
-                              <span className={`px-2 py-1 rounded text-xs font-bold ${getThreatLevelColor(threat.severity)} text-white`}>
-                                {threat.severity}
+                            <div className="flex items-center gap-3 mb-2">
+                              <Bug className="w-5 h-5 text-red-400" />
+                              <span className="font-mono text-cyan-400 font-bold">{vuln.cve}</span>
+                              <span className={`px-3 py-1 rounded-full text-xs font-bold ${getThreatBadgeColor(vuln.severity)}`}>
+                                {vuln.severity}
                               </span>
                             </div>
-                            <p className="text-sm opacity-80">{threat.location}</p>
+                            <p className="text-sm text-slate-400 ml-8">{vuln.component}</p>
                           </div>
                           <div className="text-right">
-                            <div className="text-2xl font-bold">{threat.probability}%</div>
-                            <div className="text-xs opacity-80">Probability</div>
+                            <div className="text-2xl font-bold text-red-400">{vuln.cvssScore}</div>
+                            <div className="text-xs text-slate-500">CVSS Score</div>
                           </div>
                         </div>
-                        <div className="mt-3 pt-3 border-t border-current opacity-50">
-                          <p className="text-sm font-medium">Recommendation:</p>
-                          <p className="text-sm opacity-80">{threat.recommendation}</p>
-                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Timeline Risk */}
+                {/* Attack Vectors */}
                 <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-cyan-400" />
-                    Risk Timeline Forecast
+                  <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <Target className="w-6 h-6 text-cyan-400" />
+                    Identified Attack Vectors
                   </h3>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between mb-2">
-                        <span className="text-sm text-slate-400">Next 24 Hours</span>
-                        <span className="text-sm font-semibold text-yellow-400">{analysisResult.timelineRisk.next24h}% Risk</span>
-                      </div>
-                      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-                        <div className="h-full bg-yellow-500" style={{width: `${analysisResult.timelineRisk.next24h}%`}} />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between mb-2">
-                        <span className="text-sm text-slate-400">Next 7 Days</span>
-                        <span className="text-sm font-semibold text-orange-400">{analysisResult.timelineRisk.next7days}% Risk</span>
-                      </div>
-                      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-                        <div className="h-full bg-orange-500" style={{width: `${analysisResult.timelineRisk.next7days}%`}} />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between mb-2">
-                        <span className="text-sm text-slate-400">Next 30 Days</span>
-                        <span className="text-sm font-semibold text-red-400">{analysisResult.timelineRisk.next30days}% Risk</span>
-                      </div>
-                      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-                        <div className="h-full bg-red-500" style={{width: `${analysisResult.timelineRisk.next30days}%`}} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Vulnerabilities */}
-                <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <Lock className="w-5 h-5 text-cyan-400" />
-                    Known Vulnerabilities (CVE)
-                  </h3>
-                  <div className="space-y-2">
-                    {analysisResult.vulnerabilities.map((vuln, idx) => (
-                      <div key={idx} className="flex items-center justify-between bg-slate-700/50 p-3 rounded-lg">
-                        <div>
-                          <span className="font-mono text-cyan-400">{vuln.cve}</span>
-                          <span className="text-slate-400 text-sm ml-3">{vuln.component}</span>
-                        </div>
-                        <span className={`px-3 py-1 rounded text-xs font-bold ${getThreatLevelColor(vuln.severity)} text-white`}>
-                          {vuln.severity}
-                        </span>
+                  <div className="grid grid-cols-2 gap-3">
+                    {analysisResult.attackVectors.map((vector, idx) => (
+                      <div key={idx} className="bg-gradient-to-br from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-lg p-4 text-center">
+                        <p className="font-semibold text-red-300">{vector}</p>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Recommendations */}
+                {/* Affected Assets */}
                 <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5 text-cyan-400" />
-                    Security Recommendations
+                  <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <Server className="w-6 h-6 text-cyan-400" />
+                    Affected Assets
                   </h3>
-                  <div className="space-y-2">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {analysisResult.affectedAssets.map((asset, idx) => (
+                      <div key={idx} className="bg-slate-700/50 border border-slate-600 rounded-lg p-3 flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                        <span className="text-sm text-slate-300">{asset}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Security Recommendations - Enhanced */}
+                <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur border border-cyan-500/30 rounded-xl p-6">
+                  <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <CheckCircle className="w-6 h-6 text-cyan-400" />
+                    Priority Security Recommendations
+                  </h3>
+                  <div className="space-y-3">
                     {analysisResult.recommendations.map((rec, idx) => (
-                      <div key={idx} className="flex items-start gap-3 bg-slate-700/50 p-3 rounded-lg">
-                        <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-slate-300 text-sm">{rec}</span>
+                      <div key={idx} className="flex items-start gap-3 bg-slate-800/50 border border-slate-700 p-4 rounded-lg hover:border-cyan-500/50 transition-colors">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-500/50">
+                          <span className="text-cyan-400 font-bold text-sm">{idx + 1}</span>
+                        </div>
+                        <span className="text-slate-300 text-sm flex-1 pt-1">{rec}</span>
                       </div>
                     ))}
                   </div>
                 </div>
-
-                {/* Export Button */}
-                <button 
-                  onClick={() => {
-                    const report = JSON.stringify(analysisResult, null, 2);
-                    const blob = new Blob([report], { type: 'application/json' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `cybershield-report-${Date.now()}.json`;
-                    a.click();
-                  }}
-                  className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
-                >
-                  <FileText className="w-5 h-5" />
-                  Export Detailed Report (JSON)
-                </button>
               </div>
             )}
           </div>
@@ -739,8 +932,8 @@ const CyberThreatPlatform = () => {
                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[80%] p-3 rounded-lg ${
                     msg.role === 'user' 
-                      ? 'bg-cyan-500 text-white' 
-                      : 'bg-slate-700 text-slate-100'
+                      ? 'bg-gradient-to-br from-cyan-500 to-blue-500 text-white' 
+                      : 'bg-slate-700 text-slate-100 border border-slate-600'
                   }`}>
                     {msg.role === 'assistant' && (
                       <div className="flex items-center gap-2 mb-1">
@@ -754,11 +947,11 @@ const CyberThreatPlatform = () => {
               ))}
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-slate-700 p-3 rounded-lg">
+                  <div className="bg-slate-700 border border-slate-600 p-3 rounded-lg">
                     <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
-                      <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
-                      <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+                      <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+                      <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+                      <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
                     </div>
                   </div>
                 </div>
@@ -780,7 +973,7 @@ const CyberThreatPlatform = () => {
                 <button
                   onClick={sendMessage}
                   disabled={!inputMessage.trim() || isTyping}
-                  className="bg-cyan-500 hover:bg-cyan-600 disabled:bg-slate-600 disabled:cursor-not-allowed p-2 rounded-lg transition-colors"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed p-2 rounded-lg transition-all"
                 >
                   <Send className="w-5 h-5 text-white" />
                 </button>
@@ -793,7 +986,7 @@ const CyberThreatPlatform = () => {
         {/* Floating Chat Button */}
         <button
           onClick={() => setChatOpen(!chatOpen)}
-          className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-full shadow-lg flex items-center justify-center transition-all z-40 group"
+          className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-full shadow-2xl flex items-center justify-center transition-all z-40 hover:scale-110"
         >
           {chatOpen ? (
             <X className="w-7 h-7 text-white" />
