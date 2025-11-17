@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![CyberShield Logo]([docs/architecture/logo.png](https://github.com/Shadoww002/cybershield-platform/blob/main/logo.jpg))
+![CyberShield Logo](logo.jpg)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
