@@ -16,6 +16,9 @@
 
 </div>
 
+## Deployment Link 
+[Click Me](https://github.com/Shadoww002/cybershield-platform)
+
 ## 🌟 Features
 
 - 🤖 **ML-Powered Detection** - Ensemble models with 95%+ accuracy
@@ -116,11 +119,6 @@ python scripts/train_malware_classifier.py
 
 # Evaluate all models
 python scripts/evaluate_models.py
-```
-
-## 🐳 Docker Deployment
-```bash
-docker-compose up -d
 ```
 
 ## 📈 Datasets Used
