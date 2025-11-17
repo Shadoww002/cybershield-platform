@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![CyberShield Logo](docs/architecture/logo.png)
+![CyberShield Logo]([docs/architecture/logo.png](https://github.com/Shadoww002/cybershield-platform/blob/main/logo.jpg))
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
@@ -12,7 +12,7 @@
 
 **AI-powered cybersecurity platform with 95%+ accuracy**
 
-[Demo](cybershield-platform-git-main-sanjays-projects-f79e305d.vercel.app) • [Documentation](ml_training/docs/MODELS.md) • [API Docs](docs/API.md)
+[Demo](cybershield-platform-git-main-sanjays-projects-f79e305d.vercel.app) • [Documentation](ml_training/docs/MODELS.md) 
 
 </div>
 
