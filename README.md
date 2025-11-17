@@ -12,7 +12,7 @@
 
 **AI-powered cybersecurity platform with 95%+ accuracy**
 
-[Demo]([https://cybershield.vercel.app](https://cybershield-platform-git-main-sanjays-projects-f79e305d.vercel.app/)) • [Documentation](ml_training/docs/MODELS.md) • [API Docs](docs/API.md)
+[Demo](cybershield-platform-git-main-sanjays-projects-f79e305d.vercel.app) • [Documentation](ml_training/docs/MODELS.md) • [API Docs](docs/API.md)
 
 </div>
 
