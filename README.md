@@ -12,11 +12,9 @@
 
 **AI-powered cybersecurity platform with 95%+ accuracy**
 
-[Demo](
-
+[Demo]
 https://github.com/user-attachments/assets/0330b050-3ed0-4545-82a9-b7cc5ba6b7e8
-
-) • [Documentation](ml_training/docs/MODELS.md) 
+• [Documentation](ml_training/docs/MODELS.md) 
 
 </div>
 
