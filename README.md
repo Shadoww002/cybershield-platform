@@ -2,7 +2,8 @@
 
 <div align="center">
 
-![CyberShield Logo](logo.jpg)
+![CyberML Logo](<img width="650" height="162" alt="image" src="https://github.com/user-attachments/assets/0f48b322-0e28-4bb5-8701-6cad8061aee2" />
+)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
@@ -12,7 +13,8 @@
 
 **AI-powered cybersecurity platform with 95%+ accuracy**
 
-[Demo](https://github.com/user-attachments/assets/0330b050-3ed0-4545-82a9-b7cc5ba6b7e8)
+[Demo](https://github.com/user-attachments/assets/50d6c7cb-1834-415d-b25c-3dd8105b763f)
+
 
 • [Documentation](ml_training/docs/MODELS.md) 
 
