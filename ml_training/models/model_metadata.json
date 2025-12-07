@@ -1,0 +1,28 @@
+{
+  "models": {
+    "malware_detector_rf": {
+      "version": "2.0.0",
+      "type": "RandomForestClassifier",
+      "features": 87,
+      "accuracy": 0.943,
+      "training_samples": 1200000,
+      "last_updated": "2024-12-07"
+    },
+    "url_classifier_xgb": {
+      "version": "2.0.0",
+      "type": "XGBClassifier",
+      "features": 43,
+      "accuracy": 0.958,
+      "training_samples": 250000,
+      "last_updated": "2024-12-07"
+    },
+    "api_anomaly_detector": {
+      "version": "2.0.0",
+      "type": "IsolationForest",
+      "features": 56,
+      "accuracy": 0.892,
+      "training_samples": 180000,
+      "last_updated": "2024-12-07"
+    }
+  }
+}
