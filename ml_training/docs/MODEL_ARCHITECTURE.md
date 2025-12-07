@@ -23,3 +23,8 @@ CyberML Platform uses multiple machine learning models for threat detection.
 - **Detection Rate**: 89.2%
 - **Use Case**: API security testing
 
+### Model Accuracy
+- **Malware Detector: 94.3% accuracy with 93.8% precision**
+- **API Anomaly Detector: 89.2% detection rate**
+- **URL Classifier: 95.8% accuracy with 96.2% precision**
+
