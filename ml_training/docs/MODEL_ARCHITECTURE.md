@@ -23,5 +23,3 @@ CyberML Platform uses multiple machine learning models for threat detection.
 - **Detection Rate**: 89.2%
 - **Use Case**: API security testing
 
-## Training Pipeline
-See `ml_training/` directory for training scripts and notebooks.
